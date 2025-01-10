@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/CMakeFiles/bootloader
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/CMakeFiles/bootloader.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/CMakeFiles/bootloader-complete.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+D:/Users/Joanellie/Documentos/Embedded Systems Repositories/ESP32_Repository/Blink_with_Timers/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
