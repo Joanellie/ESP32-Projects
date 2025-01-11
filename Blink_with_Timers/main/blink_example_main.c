@@ -1,3 +1,12 @@
+/***************************************************************************
+*@brief Blink using Timers
+This project enables the pin 2 of the MCU to make the LED within the PCB to
+blink every 'interval' miliseconds.
+'Interval' is the variable that stores the wished time in miliseconds of the
+callback from Timer to be executed. Every time the callback executes, the 
+status level of the LED will change to the opposite.
+***************************************************************************/
+
 #include <stdio.h>
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
@@ -17,7 +26,7 @@ esp_err_t blink_led(void);
 esp_err_t set_timer(void);
 
 TimerHandle_t xTimers;
-int interval = 1000;
+int interval = 1000;    //time in miliseconds
 int timerId = 1;
 
 void vTimerCallback( TimerHandle_t pxTimer ){

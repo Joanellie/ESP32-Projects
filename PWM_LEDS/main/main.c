@@ -1,3 +1,10 @@
+/***************************************************************************
+*@brief PWM with LEDs
+This project enables pin 33,25,26 as outputs to be wired each one to a LED.
+Everytime the Callback from timer executes, the duty cycle of every LED will
+increment 10 times. Callback will be executed every 'interval' miliseconds,
+in which 'interval' is the variable that stores the time in miliseconds.
+***************************************************************************/
 #include <stdio.h>
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
