@@ -138,8 +138,8 @@ esp_err_t init_led(void)
 
     /*Initialize each LED in LOW level*/
     gpio_set_level(ledR, 0);
-    gpio_set_level(ledR, 0);
-    gpio_set_level(ledR, 0);
+    gpio_set_level(ledG, 0);
+    gpio_set_level(ledB, 0);
 
     return ESP_OK;
 }
