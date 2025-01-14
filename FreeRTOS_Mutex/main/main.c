@@ -26,7 +26,7 @@ to the mutex, so the shared resource could be available again.
 
 static const char *TAG = "Main";    /*Tag for the LOGS mns in terminal*/
 
-SemaphoreHandle_t GlobalKey = 0;
+SemaphoreHandle_t GlobalKey = 0;    /*Variable to save the Mutex created*/
 
 /**********************
 * Function Prototypes
@@ -43,7 +43,7 @@ esp_err_t shared_resource(int led);     /*Resource that makes blink a LED 8 time
 *******************************/
 void app_main(void)
 {
-    GlobalKey = xSemaphoreCreateMutex();
+    GlobalKey = xSemaphoreCreateMutex();    /*Creating the Mutex*/
     init_led();
     create_tasks();    
 }
@@ -93,6 +93,7 @@ esp_err_t create_tasks(void){
 /*********************
 *   MUTEX SECTION
 *********************/
+/*Resource to be shared by Task R and G*/
 esp_err_t shared_resource(int led){
     for (size_t i = 0; i < 8; i++)
     {
@@ -104,7 +105,7 @@ esp_err_t shared_resource(int led){
     return ESP_OK;
 }
 
-/*Actions to be executed once created Task LED Red*/
+/*Task R that executesthe shared resource when the Key is available*/
 void vTask_LEDR(void *pvParameters)
 {
     while (1)
@@ -119,7 +120,7 @@ void vTask_LEDR(void *pvParameters)
     }    
 }
 
-/*Actions to be executed once created Task LED Green*/
+/*Task G that executesthe shared resource when the Key is available*/
 void vTask_LEDG(void *pvParameters)
 {
 
@@ -128,8 +129,8 @@ void vTask_LEDG(void *pvParameters)
         /*Check if the key is available*/
        if(xSemaphoreTake(GlobalKey, pdMS_TO_TICKS(100))){
             ESP_LOGI(TAG, "Task G took the resource");      
-            shared_resource(LEDG);                          /*If so, Task R takes the shared resource from mutex*/
-            xSemaphoreGive(GlobalKey);                      /*After taken the shared resource, Task R returns the key to the mutex*/
+            shared_resource(LEDG);                          /*If so, Task G takes the shared resource from mutex*/
+            xSemaphoreGive(GlobalKey);                      /*After taken the shared resource, Task G returns the key to the mutex*/
        }       
        vTaskDelay(pdMS_TO_TICKS(LEDG_DELAY));   /*To avoid errors with Watchdog timer*/
     }
