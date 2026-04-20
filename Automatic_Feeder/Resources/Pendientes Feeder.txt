@@ -1,0 +1,7 @@
+Pendientes Feeder:
+Analizar las funciones de webPageBody y esp32WebPage 
+	esp32WebPage -> es el selector, quiero que haga lo de 				webPageBody para analizar comportamiento
+
+Contexto: actualmente funciona como el tutorial, debo tomar lo del 
+tutorial y transofmralo a lo que quiero del feeder. Es fácil, ahorita
+la pagina web despliega lo del tuto y mi selector.
