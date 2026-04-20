@@ -25,10 +25,14 @@ struct pin26State
 };
 
 pin26State D26;
-const char* ledState = D26.OFF;
+const char *ledState = D26.OFF;
 
 // Output variable to GPIO pin
 const int output26 = 26;
+
+// Variables to store the feeding time
+String feedHour = "04";
+String feedMinute = "30";
 
 void setup() {
   Serial.begin(115200);
@@ -72,21 +76,37 @@ void loop(){
             client.println();
             
             // turns the GPIO on and off
-            if (header.indexOf("GET /26/on") >= 0) {              
-              ledState = D26.ON;
-              Serial.print("GPIO 26 "); Serial.println(ledState);
+            // if (header.indexOf("GET /26/on") >= 0) {              
+            //   ledState = D26.ON;
+            //   Serial.print("GPIO 26 "); Serial.println(ledState);
+            //   digitalWrite(output26, HIGH);
+            // } else if (header.indexOf("GET /26/off") >= 0) {
+            //   ledState = D26.OFF;
+            //   digitalWrite(output26, LOW);
+            //   Serial.print("GPIO 26 "); Serial.println(ledState);
+            // }
+            if (header.indexOf("GET /saveHr") >= 0) {
+              // Extract hour and minute from the header
+              int hourIndex = header.indexOf("hour=");
+              int minuteIndex = header.indexOf("minute=");
+              if (hourIndex >= 0) {
+                feedHour = header.substring(hourIndex + 5, hourIndex + 7);
+              }
+              if (minuteIndex >= 0) {
+                feedMinute = header.substring(minuteIndex + 7, minuteIndex + 9);
+              }
+              Serial.print("New feed time: ");
+              Serial.print(feedHour);
+              Serial.print(":");
+              Serial.println(feedMinute);
               digitalWrite(output26, HIGH);
-            } else if (header.indexOf("GET /26/off") >= 0) {
-              ledState = D26.OFF;
+              delay(800);
               digitalWrite(output26, LOW);
-              Serial.print("GPIO 26 "); Serial.println(ledState);
-            } else if (header.indexOf("GET /saveHr") >= 0) {
-              // Handle save hour request
             }
 
             webPageHeader(client);
-            webPageBody(client, ledState);
-            esp32WebPage(client);
+            //webPageBody(client, ledState);
+            esp32WebPage(client, feedHour, feedMinute);
 
             // Break out of the while loop
             break;
