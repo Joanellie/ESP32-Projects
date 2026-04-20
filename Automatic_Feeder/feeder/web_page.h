@@ -5,6 +5,5 @@
 
 void esp32WebPage(WiFiClient& client, String hour = "04", String minute = "30");
 void webPageHeader(WiFiClient& client);
-void webPageBody(WiFiClient& client, const char *outputState);
 
 #endif              

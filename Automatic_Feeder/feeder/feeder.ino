@@ -75,16 +75,6 @@ void loop(){
             client.println("Connection: close");
             client.println();
             
-            // turns the GPIO on and off
-            // if (header.indexOf("GET /26/on") >= 0) {              
-            //   ledState = D26.ON;
-            //   Serial.print("GPIO 26 "); Serial.println(ledState);
-            //   digitalWrite(output26, HIGH);
-            // } else if (header.indexOf("GET /26/off") >= 0) {
-            //   ledState = D26.OFF;
-            //   digitalWrite(output26, LOW);
-            //   Serial.print("GPIO 26 "); Serial.println(ledState);
-            // }
             if (header.indexOf("GET /saveHr") >= 0) {
               // Extract hour and minute from the header
               int hourIndex = header.indexOf("hour=");
@@ -105,7 +95,6 @@ void loop(){
             }
 
             webPageHeader(client);
-            //webPageBody(client, ledState);
             esp32WebPage(client, feedHour, feedMinute);
 
             // Break out of the while loop

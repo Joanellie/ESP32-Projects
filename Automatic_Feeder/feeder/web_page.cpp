@@ -6,36 +6,13 @@ void webPageHeader(WiFiClient& client) {
     client.println("<!DOCTYPE html><html>");
     client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
     client.println("<link rel=\"icon\" href=\"data:,\">");
-    // CSS to style the on/off buttons 
-    client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
-    client.println(".buttonON { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;");
-    client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-    client.println(".buttonOFF {background-color: #555555;}");
     // CSS to style the feeder selector
+    client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
     client.println(".setHr { font-size: 24px; }");
     client.println(".time-select { font-size: 20px; padding: 5px; margin: 10px; }");
     client.println(".buttonSave { background-color: #4c90af; border: none; color: white; padding: 16px 40px;");
     client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
     client.println("</style></head>");
-}
-
-void webPageBody(WiFiClient& client, const char *outputState) {
-    // Web Page Heading
-    client.println("<body><h1>ESP32 Web Server</h1>");
-    
-    // Display current state, and ON/OFF buttons for GPIO 26  
-    client.print("<p>GPIO 26 - State ");
-    client.print(outputState);
-    client.println("</p>");
-    // If the outputState is off, it displays the ON button       
-    if (strcmp(outputState, "off") == 0) {
-        client.println("<p><a href=\"/26/on\"><button class=\"buttonON\">ON</button></a></p>");
-    } else {
-        client.println("<p><a href=\"/26/off\"><button class=\"buttonOFF\">OFF</button></a></p>");
-    } 
-    client.println("</body></html>");
-    // The HTTP response ends with another blank line
-    client.println();
 }
 
 void esp32WebPage(WiFiClient& client, String hour, String minute) {
