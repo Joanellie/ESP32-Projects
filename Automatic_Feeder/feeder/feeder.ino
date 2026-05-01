@@ -21,6 +21,7 @@ const char* password = NULL;
  ****************************/
 TaskHandle_t TaskHandle = NULL;
 TimerHandle_t TimerHandle = NULL;
+SemaphoreHandle_t Semaphore = NULL;
 
 /*****************************
  *      ESP32 SETUP
@@ -30,6 +31,14 @@ void setup() {
   pinMode(output26, OUTPUT);
   digitalWrite(output26, LOW);
 
+  /*****************************
+  *        SEMAPHORE
+  ****************************/
+  Semaphore = xSemaphoreCreateBinary();
+  if (Semaphore == NULL) {
+    Serial.println("Failed to create semaphore!");
+    while (1);
+  }  
   /*****************************
   *           TASK
   ****************************/  
@@ -63,7 +72,6 @@ void setup() {
     while (1);
   }
   xTimerStart(TimerHandle, 0); // Start the timer
-
 }
 /*****************************
  *      ESP32 LOOP
@@ -77,8 +85,9 @@ void loop(){
  ****************************/
 void Task(void *parameter) {
   for (;;) { // Infinite loop
-    Serial.println("Executing Task");
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    if(xSemaphoreTake(Semaphore, portMAX_DELAY)) {
+      Serial.println("Executing Task");
+    }
   }
 }
 /*****************************
@@ -86,4 +95,5 @@ void Task(void *parameter) {
  ****************************/
 void Callback(TimerHandle_t xTimer) {
   Serial.println("Callback executed");
+  xSemaphoreGive(Semaphore);
 }
