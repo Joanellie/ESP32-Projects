@@ -46,13 +46,13 @@ void WiFi_comm_task(feedTime &feed_time) {
             
             if (header.indexOf("GET /saveHr") >= 0) {
               // Extract hour and minute from the header
-              int hourIndex = header.indexOf("hour=");
-              int minuteIndex = header.indexOf("minute=");
+              int hourIndex = header.indexOf("feed_time.hour=");
+              int minuteIndex = header.indexOf("feed_time.minute=");
               if (hourIndex >= 0) {
-                feed_time.hour = header.substring(hourIndex + 5, hourIndex + 7);
+                feed_time.hour = header.substring(hourIndex + 15, hourIndex + 17).toInt();
               }
               if (minuteIndex >= 0) {
-                feed_time.minute = header.substring(minuteIndex + 7, minuteIndex + 9);
+                feed_time.minute = header.substring(minuteIndex + 17, minuteIndex + 19).toInt();
               }
               Serial.print("New feed time: ");
               Serial.print(feed_time.hour);
@@ -61,7 +61,7 @@ void WiFi_comm_task(feedTime &feed_time) {
             }
 
             webPageHeader(client);
-            esp32WebPage(client, String(feed_time.hour), String(feed_time.minute));
+            webPageBody(client, feed_time);
 
             // Break out of the while loop
             break;
