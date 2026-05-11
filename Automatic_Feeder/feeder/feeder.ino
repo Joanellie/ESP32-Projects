@@ -8,6 +8,7 @@
  ****************************/
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#include <stdint.h>
 #include "WiFi_comm.h"
 
 /*****************************
@@ -15,6 +16,14 @@
  ****************************/
 const char* ssid     = "Automatic Feeder";
 const char* password = NULL;
+
+/*****************************
+ *    GLOBAL VARIABLES
+ ****************************/
+uint8_t current_HR = 0;
+uint8_t current_MIN = 0;
+
+feedTime feed_time = {"4", "30"}; // Default feeding time: 04:30
 
 /*****************************
  *      HANDLERS
@@ -77,7 +86,7 @@ void setup() {
  *      ESP32 LOOP
  ****************************/
 void loop(){
-  WiFi_comm_task();
+  WiFi_comm_task(feed_time);
 }
 
 /*****************************
@@ -93,7 +102,7 @@ void Task(void *parameter) {
 /*****************************
  *   CALLLBACK FUNCTIONS
  ****************************/
-void Callback(TimerHandle_t xTimer) {
+void Callback(TimerHandle_t xTimer) {  
   Serial.println("Callback executed");
   xSemaphoreGive(Semaphore);
 }

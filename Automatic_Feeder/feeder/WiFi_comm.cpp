@@ -9,10 +9,6 @@ WiFiServer server(80);
 // Variable to store the HTTP request
 String header;
 
-// Variables to store the feeding time
-String feedHour = "04";
-String feedMinute = "30";
-
 void WiFi_comm_setup(const char* ssid, const char* password){
   // Configure ESP32 as an Access Point network with its SSID and password
   Serial.print("Setting AP (Access Point)…");
@@ -26,7 +22,7 @@ void WiFi_comm_setup(const char* ssid, const char* password){
   server.begin();    
 }
 
-void WiFi_comm_task(){
+void WiFi_comm_task(feedTime &feed_time) {
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -53,19 +49,19 @@ void WiFi_comm_task(){
               int hourIndex = header.indexOf("hour=");
               int minuteIndex = header.indexOf("minute=");
               if (hourIndex >= 0) {
-                feedHour = header.substring(hourIndex + 5, hourIndex + 7);
+                feed_time.hour = header.substring(hourIndex + 5, hourIndex + 7);
               }
               if (minuteIndex >= 0) {
-                feedMinute = header.substring(minuteIndex + 7, minuteIndex + 9);
+                feed_time.minute = header.substring(minuteIndex + 7, minuteIndex + 9);
               }
               Serial.print("New feed time: ");
-              Serial.print(feedHour);
+              Serial.print(feed_time.hour);
               Serial.print(":");
-              Serial.println(feedMinute);
+              Serial.println(feed_time.minute);
             }
 
             webPageHeader(client);
-            esp32WebPage(client, feedHour, feedMinute);
+            esp32WebPage(client, String(feed_time.hour), String(feed_time.minute));
 
             // Break out of the while loop
             break;
